@@ -1,0 +1,13 @@
+# Dependency
+/node_modules
+/vendor
+/tests
+/build
+
+.env
+.log
+
+package-lock.json
+
+# OS files
+.DS_Store

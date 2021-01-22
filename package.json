@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-blog",
+  "version": "1.0.0",
+  "description": "NodeJS Blog - CICCC WMAD Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arielcardoso/nodejs-blog.git"
+  },
+  "author": "Ariel Cardoso",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arielcardoso/nodejs-blog/issues"
+  },
+  "homepage": "https://github.com/arielcardoso/nodejs-blog#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  }
+}
