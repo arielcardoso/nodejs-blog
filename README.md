@@ -1,2 +1,2 @@
-# nodejs-midterm-project
-CICCC WMAD Course - NodeJs Midterm Project
+# nodejs-blog
+NodeJS Blog - CICCC WMAD Project
