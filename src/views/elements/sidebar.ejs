@@ -1,0 +1,75 @@
+<div class="card">
+  <div class="card-header">
+    <i class="bi bi-grid me-1"></i>
+    Categories
+  </div>
+  <% if (categories.length > 0) { %>
+    <div class="list-group list-group-flush" >
+      <% if(filter_category){ %>
+        <a href="/blog" class="list-group-item list-group-item-action" >
+          <i class="bi bi-arrow-right-short me-2"></i>
+          All 
+        </a>
+      <% } %>
+      <% for(let category of categories){ %>
+        <a href="/blog/?filter_category=<%= category._id %>" class="list-group-item list-group-item-action <%= (category._id == filter_category)? 'active':'' %>" >
+          <i class="bi bi-arrow-right-short me-2"></i>
+          <%= category.name %>
+        </a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="card-body">
+      <p class="text-center my-4">No post found.</p>
+    </div>
+  <% } %>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <i class="bi bi-star me-1"></i>
+    Trend Posts
+  </div>
+  <% if (trendPosts.length > 0) { %>
+    <div class="list-group list-group-flush" >
+      <% for(let post of trendPosts){ %>
+        <a href="/blog/<%=post._id%>" class="list-group-item list-group-item-action" >
+          <img src="<%=post.image%>" class="img-fluid rounded d-inline me-2" alt="<%=post.title%>" width="40" >
+          <%=post.title%>
+        </a>
+      <% } %>
+    </div>
+  <% }else{ %>
+    <div class="card-body">
+      <p class="text-center my-4">No post found.</p>
+    </div>
+  <% } %>
+</div>
+
+<div class="card mt-3">
+  <div class="card-header">
+    <i class="bi bi-chat-text me-1"></i>
+    Last Comment
+  </div>
+  <% if (lastComment) { %>
+    <div class="list-group list-group-flush" >
+      <% for(let comment of lastComment){ %>
+        <a href="/blog/<%=comment.postId%>" class="list-group-item list-group-item-action" >
+          <p>"<%= comment.text %>"</p>
+          <hr>
+          <p style="font-size:14px;">
+            <span class="text-muted" >
+              <i class="bi bi-person me-1"></i>
+              <%= comment.username %>
+            </span>
+            <span class="fst-italic text-muted float-end small" ><%= moment(comment.created).fromNow() %></span>
+          </p>
+        </a>
+      <% } %>
+    </div>
+  <% } else { %>
+    <div class="card-body">
+      <p class="text-center my-4">No comment found.</p>
+    </div>
+  <% } %>
+</div>

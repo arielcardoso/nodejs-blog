@@ -1,0 +1,137 @@
+<%- include('../elements/head'); -%>
+<style>
+  .btn-like-dislike {
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .btn-like-dislike i {
+    border-left: 1px solid rgba(255,255,255, 0.2);
+    padding-left: 0.5rem;
+  }
+</style>
+<main class="container mb-5">
+  <div class="row">
+    <div class="col-md-8 col-lg-9">
+      <div class="row">
+        <div class="col-md-4">
+          <img id="image-preview" src="<%= post.image %>" alt="<%= post.title %>" class="img-fluid rounded">
+          <div class="d-flex justify-content-between" >
+            <div class="w-50 pe-1" >
+              <form action="/blog/like/<%=post._id%>" method="POST">
+                <button type="submit" class="btn-like-dislike btn btn-sm btn-success mt-2" >
+                  <span>Likes: <%= post.likes %></span>
+                  <i class="bi bi-hand-thumbs-up-fill me-1"></i>
+                </button>
+              </form>
+            </div>
+            <div class="w-50 ps-1" >
+              <form action="/blog/dislike/<%=post._id%>" method="POST">
+                <button type="submit" class="btn-like-dislike btn btn-sm btn-danger mt-2" >
+                  <span>Dislikes: <%= post.dislikes %></span>
+                  <i class="bi bi-hand-thumbs-down-fill me-1"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <h2><%= post.title %></h2>
+          <hr>
+          <div class="d-flex justify-content-between">
+            <div>
+              <i class="bi bi-bookmarks me-2"></i>
+              <span>
+                <% for(let category of categories){ %>
+                  <%= (category._id.toString() == post.category)? category.name : '' %>
+                <% } %>
+              </span>
+            </div>
+            <div>
+              <i class="bi bi-calendar2-minus me-1"></i>
+              <span class="small fst-italic">
+                <%= moment(post.created).fromNow() %>
+              </span>
+            </div>
+          </div>
+          <hr>
+          <p class="mt-4 mb-4">
+            <%= post.text %>
+          </p>
+
+          <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#modalCommentForm">
+            <i class="bi bi-chat-dots me-2"></i>
+            Leave a comment
+          </button>
+
+          <a href="/blog/edit/<%= post._id %>" class="btn btn-sm btn-outline-dark" >
+            <i class="bi bi-pencil me-2"></i>
+            Edit this post
+          </a>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-12">
+
+          <% if (comments.length > 0) { %>
+            <div class="card mt-3">
+              <div class="card-header">
+                  Comments
+              </div>
+              <ul class="list-group list-group-flush">
+                <% for(let comment of comments){ %>
+                  <li class="list-group-item">
+                    <p>
+                      <i class="bi bi-person me-1"></i> 
+                      <span class="fw-bold" ><%= comment.username %></span> - <span class="small fst-italic" ><%= moment(comment.created).fromNow() %></span>
+                    </p>
+                    <p class="ps-4 fst-italic"><%= comment.text %></p>
+                  </li>
+                <% } %>
+              </ul>
+            </div>
+          <% } %>
+    
+        </div>
+      </div>
+
+    </div>
+    <div class="col-md-4 col-lg-3">
+      <%- include('../elements/sidebar'); -%>
+    </div>
+  </div>
+</main>
+
+<div class="modal" id="modalCommentForm" tabindex="-1" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Leave a comment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form action="/blog/comment/<%= post._id %>" method="POST" >
+        <input type="hidden" name="postId" value="<%= post._id %>" >
+        <div class="modal-body">
+          <div class="form-floating mb-3">
+            <input name="username" type="text" class="form-control" placeholder="" required >
+            <label>Name / Nickname</label>
+          </div>
+          <div class="form-floating mb-3">
+            <textarea name="text" class="form-control" placeholder="Leave your comment here" required style="height:120px;" ></textarea>
+            <label>Comment</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-dark mt-2" type="submit" >Send comment</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../elements/foot'); -%>
